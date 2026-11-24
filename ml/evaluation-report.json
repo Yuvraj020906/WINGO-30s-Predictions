@@ -1,0 +1,91 @@
+{
+  "warning": "Offline chronological evaluation only; not deployed as a prediction model. Results may be noisy and require repeated walk-forward confirmation.",
+  "rows": 408,
+  "split": {
+    "train": 226,
+    "validation": 76,
+    "test": 76
+  },
+  "models": {
+    "logistic_regression": {
+      "validation": {
+        "accuracy": 0.05263157894736842,
+        "logLoss": 5.8228912861382875,
+        "brierScore": 1.4240720458987095,
+        "expectedCalibrationError": 0.6099215320680218,
+        "cases": 76
+      },
+      "test": {
+        "accuracy": 0.14473684210526316,
+        "logLoss": 5.413288545285119,
+        "brierScore": 1.3080128308305274,
+        "expectedCalibrationError": 0.5265439399627424,
+        "cases": 76
+      }
+    },
+    "random_forest": {
+      "validation": {
+        "accuracy": 0.09210526315789473,
+        "logLoss": 2.380474021696275,
+        "brierScore": 0.9165454167710357,
+        "expectedCalibrationError": 0.07637775148254297,
+        "cases": 76
+      },
+      "test": {
+        "accuracy": 0.09210526315789473,
+        "logLoss": 2.37811334487274,
+        "brierScore": 0.9166823265244741,
+        "expectedCalibrationError": 0.06784410758266819,
+        "cases": 76
+      }
+    },
+    "gradient_boosting": {
+      "validation": {
+        "accuracy": 0.05263157894736842,
+        "logLoss": 3.8190446690800197,
+        "brierScore": 1.257150095662159,
+        "expectedCalibrationError": 0.49867212498189567,
+        "cases": 76
+      },
+      "test": {
+        "accuracy": 0.13157894736842105,
+        "logLoss": 3.8043781076250367,
+        "brierScore": 1.2055009420454499,
+        "expectedCalibrationError": 0.4427419458549659,
+        "cases": 76
+      }
+    },
+    "uniform_random": {
+      "validation": {
+        "accuracy": 0.09210526315789473,
+        "logLoss": 2.302585092994045,
+        "brierScore": 0.9000000000000005,
+        "expectedCalibrationError": 0.007894736842105246,
+        "cases": 76
+      },
+      "test": {
+        "accuracy": 0.09210526315789473,
+        "logLoss": 2.302585092994045,
+        "brierScore": 0.9000000000000005,
+        "expectedCalibrationError": 0.007894736842105246,
+        "cases": 76
+      }
+    },
+    "historical_frequency": {
+      "validation": {
+        "accuracy": 0.05263157894736842,
+        "logLoss": 2.3250310933818947,
+        "brierScore": 0.9047214956379747,
+        "expectedCalibrationError": 0.0787243532560214,
+        "cases": 76
+      },
+      "test": {
+        "accuracy": 0.09210526315789473,
+        "logLoss": 2.307919353030465,
+        "brierScore": 0.9014877757450218,
+        "expectedCalibrationError": 0.03925066904549508,
+        "cases": 76
+      }
+    }
+  }
+}

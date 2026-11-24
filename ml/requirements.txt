@@ -1,0 +1,3 @@
+numpy>=1.26
+scikit-learn>=1.4
+# Optional: install xgboost separately if your Python/platform supports it.
