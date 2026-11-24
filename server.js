@@ -331,7 +331,7 @@ async function fetchProviderOnce(polledAt) {
   console.log('[PROVIDER DEBUG]', {
     status: upstream.status,
     contentType: upstream.headers.get('content-type'),
-    bodyPreview: bodyText.slice(0, 300)
+    bodyPreview: bodyText.slice(0, 1000)
   });
 
   let data;
