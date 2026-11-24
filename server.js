@@ -312,14 +312,55 @@ function reconcile(rows){
  }
  const latest=rows.at(-1);if(!latest)return;const next=nextIssue(latest.period);if(!next)return;if(rows.some(r=>r.period===next))return;if(!db.predictions.some(p=>p.issue===next)){const pred=createPrediction(rows);if(pred&&pred.issue===next)db.predictions.push(pred);}
 }
-async function fetchProviderOnce(polledAt){
- const url=new URL(API_URL);url.searchParams.set('ts',String(polledAt));
- const upstream=await fetch(url,{headers:{Accept:'application/json','Cache-Control':'no-cache'},cache:'no-store',signal:AbortSignal.timeout(12000)});
- const bodyText=await upstream.text();let data;
- try{data=JSON.parse(bodyText);}catch{const e=new Error('History API returned non-JSON content');e.detail=bodyText.slice(0,300);e.statusCode=502;e.retryable=false;throw e;}
- if(!upstream.ok){const e=new Error(`History API HTTP ${upstream.status}`);e.statusCode=502;e.retryable=upstream.status>=500||upstream.status===429;throw e;}
- if(data.code!==0||!Array.isArray(data.data?.list)){const e=new Error('Unexpected history response schema');e.statusCode=502;e.retryable=false;throw e;}
- return data;
+async function fetchProviderOnce(polledAt) {
+  const url = new URL(API_URL);
+  url.searchParams.set('ts', String(polledAt));
+
+  const upstream = await fetch(url, {
+    headers: {
+      Accept: 'application/json',
+      'Cache-Control': 'no-cache'
+    },
+    cache: 'no-store',
+    signal: AbortSignal.timeout(12000)
+  });
+
+  const bodyText = await upstream.text();
+
+  // Temporary diagnostic logging
+  console.log('[PROVIDER DEBUG]', {
+    status: upstream.status,
+    contentType: upstream.headers.get('content-type'),
+    bodyPreview: bodyText.slice(0, 300)
+  });
+
+  let data;
+
+  try {
+    data = JSON.parse(bodyText);
+  } catch {
+    const e = new Error('History API returned non-JSON content');
+    e.detail = bodyText.slice(0, 300);
+    e.statusCode = 502;
+    e.retryable = false;
+    throw e;
+  }
+
+  if (!upstream.ok) {
+    const e = new Error(`History API HTTP ${upstream.status}`);
+    e.statusCode = 502;
+    e.retryable = upstream.status >= 500 || upstream.status === 429;
+    throw e;
+  }
+
+  if (data.code !== 0 || !Array.isArray(data.data?.list)) {
+    const e = new Error('Unexpected history response schema');
+    e.statusCode = 502;
+    e.retryable = false;
+    throw e;
+  }
+
+  return data;
 }
 // The provider serves only the 10 newest issues (a ~5 minute window) and ignores every pagination
 // parameter tried, so a failed poll is not just a missed refresh — it can permanently lose a draw.
