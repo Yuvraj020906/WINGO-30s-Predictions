@@ -317,10 +317,13 @@ async function fetchProviderOnce(polledAt) {
   url.searchParams.set('ts', String(polledAt));
 
   const upstream = await fetch(url, {
-    headers: {
-      Accept: 'application/json',
-      'Cache-Control': 'no-cache'
-    },
+   headers: {
+ Accept: 'application/json, text/plain, */*',
+  'Cache-Control': 'no-cache',
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36',
+  'Referer': 'https://draw.ar-lottery01.com/',
+  'Origin': 'https://draw.ar-lottery01.com'
+},
     cache: 'no-store',
     signal: AbortSignal.timeout(12000)
   });
